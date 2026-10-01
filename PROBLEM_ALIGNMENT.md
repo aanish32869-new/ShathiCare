@@ -1,0 +1,22 @@
+# SakhiCare Problem Alignment
+
+Evidence is from repository inspection and the checks recorded in [QUALITY_REPORT.md](QUALITY_REPORT.md). UI tests run under jsdom; they are not live browser or user studies.
+
+| Challenge Requirement | Implementation | Evidence | Test | Status |
+|---|---|---|---|---|
+| Help a first-time woman independently access one essential service/scheme/resource | PMMVY guided journey, checklist, official portal handoff | `frontend/src/App.tsx`, `backend/app/rules/pmmvy_rules.json` | `App.test.tsx` journey and portal handoff | PARTIAL |
+| “The Invisible Woman”; no English | English/Tamil UI; voice transcription performs automatic language detection through configured ASR | `frontend/src/components/VoiceAssistant.tsx`, `backend/app/services/speech.py` | Backend detected-language and same-language fallback tests | PARTIAL: no-English user can still encounter English when ASR/reply translation is unavailable; only two UI languages |
+| No technical background / zero prior digital knowledge | First-visit visual Follow Me guide points at live UI controls, supports skip/replay | `frontend/src/components/Walkthrough.tsx` | First visit, skip, replay and guide step tests | PARTIAL: test-backed guide exists; no usability study or first-authenticated-login flow |
+| No one to ask | Help dialog and replayable guide; separate Sakhi chat | `frontend/src/App.tsx`, `frontend/src/components/SakhiChat.tsx` | Help and chat UI tests | PARTIAL: live AI needs configured provider; simplified semantic confusion detection is not verified |
+| Own language / voice | OpenAI `gpt-transcribe` or local multilingual `faster-whisper`; optional Gemini/OpenAI response and TTS paths | `backend/app/services/speech.py`, `backend/app/main.py`; provider setup in README | 3 backend voice tests cover detected language, low confidence, and fallback | PARTIAL: end-to-end quality/language set depends on provider and was not tested with real audio |
+| Simple text fallback | Three native one-at-a-time Yes/No controls and camera-independent navigation controls | `frontend/src/App.tsx` | Touch fallback and question progression tests | PASS for tested UI fallback |
+| Voice, gesture, or touch | VoiceAssistant, MediaPipe hand landmarks, touch answer/navigation buttons | `frontend/src/components/VoiceAssistant.tsx`, `frontend/src/App.tsx` | UI fallback tests; backend ASR tests | PARTIAL: real camera/mic and gesture debounce not hardware-tested |
+| Visual-first, not chatbot-first | Main flow is guided questions/results/checklist; chat is separate | `frontend/src/App.tsx` | Main journey tests | PASS for structure; human comprehension not tested |
+| One question at a time | Three-step PMMVY question flow | `frontend/src/App.tsx` | Question progression test | PASS |
+| Safe deterministic PMMVY guidance | Versioned facts/rules JSON and bounded “guidance only” determination; AI explains rather than decides | `backend/app/rules/pmmvy_rules.json`, `backend/app/main.py` | eligibility and invalid-input tests | PARTIAL: current facts not independently reverified in this audit |
+| Official government portal handoff | Fixed PMMVY URL and explicit confirmation step, no automated submission | `frontend/src/App.tsx` | Confirmed handoff test verifies URL and `window.open` arguments | PASS in tested UI |
+| Document coach | Checklist cards, explanation toggle and spoken explanation attempt | `frontend/src/App.tsx` | Checklist/explanation test | PARTIAL: explanation quality and all-card localization not independently verified |
+| Demo mode works without AI | Frontend default demo journey uses sample answers, separately labeled | `frontend/src/App.tsx` | Journey tests execute demo path | PASS for local UI path; no network outage browser test |
+| No unnecessary sensitive storage | Browser demo answers stay in React state; sessions store metadata; audio is size-limited/in-memory | `backend/app/session_store.py`, `backend/app/main.py` | Session and voice API tests | PARTIAL: storage/security audit not comprehensive |
+| Responsive and accessible navigation | Responsive CSS, focus indicators, reduced motion, native controls | `frontend/src/styles.css` | jsdom tests only | PARTIAL: viewport, WCAG and assistive technology checks not run |
+| No unsupported ISL claim | Gestures are a small navigation vocabulary | README and `frontend/src/App.tsx` | No dedicated gesture classifier tests | PASS as a documented limitation; real gestures not tested |

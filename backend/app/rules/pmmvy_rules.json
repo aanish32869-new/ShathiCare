@@ -1,0 +1,13 @@
+{
+  "scheme_id": "pmmvy",
+  "name": "Pradhan Mantri Matru Vandana Yojana",
+  "version": "PMMVY 2.0 / Mission Shakti (official page reviewed 2026-10-01)",
+  "summary": "Maternity benefit scheme under Mission Shakti.",
+  "eligibility_categories": ["net family income below ₹8 lakh per annum", "MGNREGA job card holder", "PM-KISAN beneficiary", "e-Shram card holder", "PMJAY beneficiary", "BPL ration card holder", "person with benchmark disability (40% or more) or fully disabled", "Scheduled Caste", "Scheduled Tribe", "pregnant or lactating AWW/AWH/ASHA", "NFSA ration card holder"],
+  "benefit_summary": "Official FAQ states ₹5,000 for the first child in two instalments and ₹6,000 for the second child if it is a girl, subject to scheme conditions.",
+  "documents": ["Aadhaar number", "MCP/RCHI card", "one proof of eligibility category", "Aadhaar-linked bank or post-office account details", "mobile number and pregnancy/child details as applicable"],
+  "official_source": "https://spniwcd.wcd.gov.in/pradhan-mantri-matru-vandana-yojna/faqs",
+  "official_source_ministry": "https://wcd.gov.in/offerings/pradhan-mantri-matru-vandana-yojana",
+  "official_url": "https://pmmvy.wcd.gov.in/",
+  "disclaimer": "This guidance is not an official eligibility decision. Confirm current conditions and documents with the official portal or an Anganwadi worker."
+}
