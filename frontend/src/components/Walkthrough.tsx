@@ -57,7 +57,6 @@ const slides:Slide[]=[
  {screen:'chat',target:'.sendButton',title:'Send your message',body:'This sends the text or selected files to Sakhi.'}
 ];
 
-const routeOrder:AppScreen[]=['home','flow','result','docs','confirm','done','chat'];
 const screenNames:Record<AppScreen,{en:string;ta:string}>={home:{en:'WELCOME',ta:'வரவேற்பு'},flow:{en:'QUESTIONS',ta:'கேள்விகள்'},result:{en:'GUIDANCE',ta:'வழிகாட்டல்'},docs:{en:'CHECKLIST',ta:'பட்டியல்'},confirm:{en:'CONFIRM',ta:'உறுதிப்படுத்தல்'},done:{en:'COMPLETE',ta:'முடிந்தது'},chat:{en:'CHAT',ta:'உரையாடல்'}};
 const firstVisit=()=>{try{return localStorage.getItem('sakhisetu_follow_guide_v2')!=='true'}catch{return false}};
 

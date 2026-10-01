@@ -4,14 +4,14 @@ Updated 2026-10-01 after repository inspection and checks in this workspace.
 
 ## 1. Code Quality
 
-- **PARTIAL.** Frontend production build passes; `npm run build` runs `tsc -b` and Vite. This checks TypeScript compilation but does not establish strict TypeScript settings or lint cleanliness.
+- **PARTIAL.** Frontend production build passes; TypeScript runs in strict mode and now rejects unused locals and parameters. No formatter or standalone lint configuration is present.
 - **PARTIAL.** FastAPI/Pydantic code separates speech, session, rules, and route concerns (`backend/app/services/speech.py`, `backend/app/session_store.py`, `backend/app/rules/`). No backend type checker or linter is configured.
 - **Change:** Home screen now exposes “Talk with Sakhi” directly. This fixes an unreachable feature: the existing automated test expected a home-screen entry, but the header previously hid it on the home screen.
 - **Change:** Fixed brittle guide test selectors that matched duplicate Skip/Next controls and stale product copy. These changes make the intended guide, handoff, and chat journeys testable.
 
 ## 2. Efficiency
 
-- **PARTIAL.** Production frontend bundle from the successful build: 335.95 kB JavaScript (103.10 kB gzip), 43.36 kB CSS (10.74 kB gzip). MediaPipe is statically imported in `src/App.tsx`, so gesture code contributes to the initial JavaScript bundle; it is not lazy-loaded.
+- **IMPROVED.** Production frontend build now emits a 210.46 kB initial JavaScript chunk (65.06 kB gzip), 43.36 kB CSS (10.74 kB gzip), and a separate 136.71 kB MediaPipe chunk (40.87 kB gzip). MediaPipe loads only when the camera gesture flow is enabled.
 - Speech model is loaded lazily and cached once by `_whisper_model()` in `backend/app/services/speech.py` (`lru_cache(maxsize=1)`). Camera frames are processed locally; camera tracks and the landmarker are released by the flow effect cleanup in `src/App.tsx`.
 - No runtime performance profile, memory profile, or Core Web Vitals measurement was run.
 
@@ -30,7 +30,7 @@ Updated 2026-10-01 after repository inspection and checks in this workspace.
 ## 5. Testing
 
 - Baseline: frontend tests **FAIL (12/12)** due to ambiguous “Skip guide” selector in a shared helper. Backend tests from repository root **FAIL to collect** because tests import `app` and expect the `backend` directory as working directory. Frontend build **PASS**.
-- After fixes: frontend **12 passed** (`cd frontend; npm test -- --reporter=dot`); backend **14 passed, 1 Starlette/httpx deprecation warning** (`cd backend; python -m pytest -q`); production build and TypeScript compile **PASS**; frontend production dependency audit **0 vulnerabilities**.
+- Latest verification: frontend **12 passed** (`cd frontend; npm test -- --reporter=dot`); production build and strict TypeScript compile **PASS**. Backend test and dependency audit results above are from the prior repository check, not rerun for this change.
 - **Change:** Added root `verify.ps1`, which runs the frontend tests/build/audit and backend tests from their expected working directories.
 - No browser automation, browser console inspection, real device checks, permissions-denial tests, or smoke run against live services was performed.
 
